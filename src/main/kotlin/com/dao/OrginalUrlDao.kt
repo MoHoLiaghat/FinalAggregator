@@ -22,9 +22,9 @@ object OrginalUrlDao {
         dataRecord.originalUrls.forEach {
             addQueryBuilder.append("(\"")
             addQueryBuilder.append(it)
-            addQueryBuilder.append("\",")
+            addQueryBuilder.append("\" , \"")
             addQueryBuilder.append(DigestUtils.sha256Hex(dataRecord.normalizedUrl))
-            addQueryBuilder.append("),")
+            addQueryBuilder.append("\"),")
         }
     }
 

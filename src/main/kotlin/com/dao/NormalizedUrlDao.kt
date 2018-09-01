@@ -20,10 +20,10 @@ object NormalizedUrlDao {
 
     fun add(dataRecord: DataRecord) {
 
-        val checkQuery = "SELECT count FROM normalizedUrl where url=\"" + dataRecord.normalizedUrl + "\";"
+        val checkQuery = "SELECT count FROM normalizedUrl where url=\"${dataRecord.normalizedUrl}\";"
         val res: ResultSet = con?.prepareStatement(checkQuery)!!.executeQuery()
         if (res.next()) {
-            val updateQuery = "UPDATE normalizedUrl SET count=" + (res.getInt(1) + dataRecord.count) + " WHERE url=\"" + dataRecord.normalizedUrl + "\";"
+            val updateQuery = "UPDATE normalizedUrl SET count=${res.getInt(1) + dataRecord.count} WHERE url=\"${dataRecord.normalizedUrl}\";"
             con?.prepareStatement(updateQuery)!!.executeUpdate()
 
         } else {
@@ -43,10 +43,9 @@ object NormalizedUrlDao {
             return
         addQueryBuilder.setLength(addQueryBuilder.length-1)
         addQueryBuilder.append(";")
-        println(addQueryBuilder.toString())
         con?.prepareStatement(addQueryBuilder.toString())!!.executeUpdate()
         addQueryBuilder.setLength(0)
-        addQueryBuilder.append("INSERT INTO normalizedUrl (url,count) VALUES ")
+        addQueryBuilder.append("INSERT INTO normalizedUrl (id,url,count) VALUES ")
     }
 
     fun getByUrl(url: String): Int {
