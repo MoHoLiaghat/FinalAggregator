@@ -1,6 +1,7 @@
 package com.dao
 
 import com.model.DataRecord
+import org.apache.commons.codec.digest.DigestUtils
 import java.sql.Connection
 import java.sql.ResultSet
 import java.sql.SQLException
@@ -8,8 +9,10 @@ import java.sql.SQLException
 
 object NormalizedUrlDao {
     var con: Connection? = null
-    var addQuery = "INSERT INTO normalizedUrl (url,count) VALUES "
-
+    val addQueryBuilder = StringBuilder()
+    init {
+        addQueryBuilder.append("INSERT INTO normalizedUrl (id,url,count) VALUES ")
+    }
 
     fun setConnection(conn: Connection?) {
         con = conn
@@ -24,19 +27,26 @@ object NormalizedUrlDao {
             con?.prepareStatement(updateQuery)!!.executeUpdate()
 
         } else {
-            addQuery = addQuery + "( \"" + dataRecord.normalizedUrl + "\" , " + dataRecord.count + "),"
+            addQueryBuilder.append("(\"")
+            addQueryBuilder.append(DigestUtils.sha256Hex(dataRecord.normalizedUrl))
+            addQueryBuilder.append("\"")
+            addQueryBuilder.append(" , \"")
+            addQueryBuilder.append(dataRecord.normalizedUrl)
+            addQueryBuilder.append("\" , ")
+            addQueryBuilder.append(dataRecord.count)
+            addQueryBuilder.append("),")
         }
     }
 
     fun flush() {
-        if (addQuery.equals("INSERT INTO normalizedUrl (url,count) VALUES "))
+        if (addQueryBuilder.equals("INSERT INTO normalizedUrl (url,count) VALUES "))
             return
-        addQuery = addQuery.substring(0, addQuery.length - 1)
-        addQuery = addQuery + ";"
-
-        con?.prepareStatement(addQuery)!!.executeUpdate()
-
-        addQuery = "INSERT INTO normalizedUrl (url,count) VALUES "
+        addQueryBuilder.setLength(addQueryBuilder.length-1)
+        addQueryBuilder.append(";")
+        println(addQueryBuilder.toString())
+        con?.prepareStatement(addQueryBuilder.toString())!!.executeUpdate()
+        addQueryBuilder.setLength(0)
+        addQueryBuilder.append("INSERT INTO normalizedUrl (url,count) VALUES ")
     }
 
     fun getByUrl(url: String): Int {

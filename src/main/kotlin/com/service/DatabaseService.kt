@@ -34,6 +34,7 @@ object DatabaseService {
             con?.commit()
         } catch (e: SQLException){
             con?.rollback()
+            e.printStackTrace()
         } finally {
             con?.close()
         }
