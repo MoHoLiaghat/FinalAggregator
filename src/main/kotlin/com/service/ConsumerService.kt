@@ -5,6 +5,7 @@ import com.google.gson.Gson
 import com.model.DataRecord
 import com.model.DataStore
 import kafka.common.KafkaException
+import org.apache.kafka.clients.consumer.ConsumerRecords
 import java.time.Duration
 import java.util.*
 
@@ -23,16 +24,16 @@ object ConsumerService {
     fun consume() {
         val gson = Gson()
         val consumer = KafkaService.getKafkaConsumer()
-        consumer.subscribe(Arrays.asList(Config.Subscribtion))
+        consumer?.subscribe(Arrays.asList(Config.Subscribtion))
         var c = 0
         var total = 0
-        var flag = true
+        var recordsSaved = true
         while (true) {
-            if (flag) {
-                flag = false
-                var records = consumer.poll(Duration.ofNanos(1))
+            if (recordsSaved) {
+                recordsSaved = false
+                var records: ConsumerRecords<String, String> = ConsumerRecords.empty()
                 try {
-                    //val records = consumer.poll(Duration.ofNanos(1))
+                    records = consumer!!.poll(Duration.ofNanos(1))
                 } catch (e: KafkaException) {
                     e.printStackTrace()
                 }
@@ -51,11 +52,11 @@ object ConsumerService {
                     DatabaseService.save(Heap)
                     var t2 = Date().time
                     println("Time :: " + (t2 - t1))
-                    consumer.commitSync()
+                    consumer?.commitSync()
                 }
             }
             if (DataStore.recordsArray.size == 0)
-                flag = true
+                recordsSaved = true
             println("Saved " + total + " records so far\n")
 
         }

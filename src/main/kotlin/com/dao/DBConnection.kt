@@ -3,7 +3,7 @@ import com.zaxxer.hikari.HikariDataSource
 import java.sql.Connection
 import java.sql.SQLException
 
-object DBConnectio {
+object DBConnection {
     val ds = HikariDataSource()
    // var con = ds.getConnection()
     init {
@@ -20,13 +20,12 @@ object DBConnectio {
         }
     }
 
-    fun getConnection(): Connection {
-        var con = ds.getConnection()
-        try{
-            //con = ds.getConnection()
+    fun getConnection(): Connection? {
+        return try{
+            ds.getConnection()
         } catch(e: SQLException){
             e.printStackTrace()
+            null
         }
-        return con
     }
 }

@@ -13,7 +13,7 @@ object KafkaService {
         Output:
             a kafkaConsumer
  */
-    fun getKafkaConsumer(): KafkaConsumer<String, String> {
+    fun getKafkaConsumer(): KafkaConsumer<String, String>? {
         val props = Properties()
         props["bootstrap.servers"] = Config.Bootstrap_servers
         props["group.id"] = Config.Group_id
@@ -24,9 +24,9 @@ object KafkaService {
         props["auto.offset.reset"] = Config.Auto_offset_reset
         props["max.poll.records"] = Config.Max_poll_records
         props["max.poll.interval"] = Config.Max_poll_interval_ms
-        val consumer = KafkaConsumer<String, String>(props)
+        var consumer:KafkaConsumer<String, String>? = null
         try {
-            //consumer = KafkaConsumer<String, String>(props)
+            consumer = KafkaConsumer<String, String>(props)
         } catch (e: KafkaException) {
             e.printStackTrace()
         }
