@@ -7,6 +7,11 @@ import java.sql.ResultSet
 import java.sql.SQLException
 
 
+/**
+ * data access object of normalized urls.
+ */
+
+
 object NormalizedUrlDao {
     var con: Connection? = null
     val addQueryBuilder = StringBuilder()

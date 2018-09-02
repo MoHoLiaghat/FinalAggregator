@@ -5,6 +5,13 @@ import org.apache.commons.codec.digest.DigestUtils
 import java.sql.Connection
 import java.sql.SQLException
 
+/**
+ * data access object of orginal urls.
+ *
+ *
+ */
+
+
 
 object OrginalUrlDao {
     var con: Connection? = null

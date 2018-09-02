@@ -11,15 +11,13 @@ import java.util.*
 
 object ConsumerService {
 
-/*
+    /**
+     * gathering date and aggregate and persist
+     * @return persist in database
+     * @exception <kafkaException>
+     *
+     */
 
-  Gathering date and aggregate and persist
-    Input: null
-    Action:
-    Output: persist in mysql
-
-
- */
 
     fun consume() {
         val gson = Gson()

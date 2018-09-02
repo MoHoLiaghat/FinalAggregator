@@ -5,14 +5,13 @@ import java.util.ArrayList
 
 object AggregatorService {
 
-    /*
-        Aggregating the arraylist of dataRecords
-            Input:
-                Arraylist of dataRecord objects
 
-            Output:
-                Hashmap of aggregated records
+    /**
+     * aggregating the arraylist of dataRecords
+     *  @param  <ArrayList> of dataRecord objects
+     * @return  Hashmap of aggregated records
      */
+
     fun aggregate(a: ArrayList<DataRecord>): HashMap<String, DataRecord> {
         var heap = hashMapOf<String, DataRecord>()
         a.forEach {

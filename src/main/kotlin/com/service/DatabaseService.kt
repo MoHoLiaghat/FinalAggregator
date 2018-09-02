@@ -8,14 +8,16 @@ import java.sql.SQLException
 
 
 object DatabaseService {
-    /*
-    Persisting a hashmap of dataRecords into database
-        Input:
-            Hashmap of dataRecords
 
-        Output:
 
- */
+
+    /**
+     * persisting a hashmap of dataRecords into database
+     * @param  hashmap of dataRecords
+     *@exception <SQLException>
+     */
+
+
     fun save(heap: HashMap<String, DataRecord>) {
         var c = 0
         val con = DBConnection.getConnection()
