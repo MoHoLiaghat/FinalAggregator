@@ -11,7 +11,7 @@ object NormalizedUrlDao {
     var con: Connection? = null
     val addQueryBuilder = StringBuilder()
     init {
-        addQueryBuilder.append("INSERT INTO normalizedUrl (id,url,count) VALUES ")
+        addQueryBuilder.append("INSERT INTO normalizedUrl (hash,url,count) VALUES ")
     }
 
     fun setConnection(conn: Connection?) {
@@ -28,7 +28,7 @@ object NormalizedUrlDao {
 
         } else {
             addQueryBuilder.append("(\"")
-            addQueryBuilder.append(DigestUtils.sha256Hex(dataRecord.normalizedUrl))
+            addQueryBuilder.append(DigestUtils.sha1Hex(dataRecord.normalizedUrl))
             addQueryBuilder.append("\"")
             addQueryBuilder.append(" , \"")
             addQueryBuilder.append(dataRecord.normalizedUrl)
@@ -45,7 +45,7 @@ object NormalizedUrlDao {
         addQueryBuilder.append(";")
         con?.prepareStatement(addQueryBuilder.toString())!!.executeUpdate()
         addQueryBuilder.setLength(0)
-        addQueryBuilder.append("INSERT INTO normalizedUrl (id,url,count) VALUES ")
+        addQueryBuilder.append("INSERT INTO normalizedUrl (hash,url,count) VALUES ")
     }
 
     fun getByUrl(url: String): Int {

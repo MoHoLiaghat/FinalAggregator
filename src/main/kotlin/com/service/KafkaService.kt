@@ -6,13 +6,18 @@ import org.apache.kafka.clients.consumer.KafkaConsumer
 import java.util.*
 
 object KafkaService {
-    /*
-    Instantiating a kafkaConsumer
-        Input:
 
-        Output:
-            a kafkaConsumer
- */
+
+
+    /**
+     *  Instanting a kafka consumer
+
+     *  @throws <consumer>, <RuntimeException>
+     *  @property
+     *
+     *
+     */
+
     fun getKafkaConsumer(): KafkaConsumer<String, String>? {
         val props = Properties()
         props["bootstrap.servers"] = Config.Bootstrap_servers
@@ -30,6 +35,9 @@ object KafkaService {
         } catch (e: KafkaException) {
             e.printStackTrace()
         }
+        /** prepare a kafka consumer
+         *  @return a Kafka consumer , Map of Strings
+         */
         return consumer
     }
 }

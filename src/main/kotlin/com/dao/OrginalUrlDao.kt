@@ -23,7 +23,7 @@ object OrginalUrlDao {
             addQueryBuilder.append("(\"")
             addQueryBuilder.append(it)
             addQueryBuilder.append("\" , \"")
-            addQueryBuilder.append(DigestUtils.sha256Hex(dataRecord.normalizedUrl))
+            addQueryBuilder.append(DigestUtils.sha1Hex(dataRecord.normalizedUrl))
             addQueryBuilder.append("\"),")
         }
     }
