@@ -6,8 +6,10 @@ import com.model.DataRecord
 import com.model.DataStore
 import kafka.common.KafkaException
 import org.apache.kafka.clients.consumer.ConsumerRecords
+import org.slf4j.LoggerFactory
 import java.time.Duration
 import java.util.*
+import java.util.logging.Logger
 
 object ConsumerService {
 
@@ -18,8 +20,8 @@ object ConsumerService {
      *
      */
 
-
     fun consume() {
+        var logger = LoggerFactory.getLogger("ConsumerService.kt")
         val gson = Gson()
         val consumer = KafkaService.getKafkaConsumer()
         consumer?.subscribe(Arrays.asList(Config.Subscribtion))
@@ -35,25 +37,26 @@ object ConsumerService {
                     records = consumer!!.poll(Duration.ofNanos(1))
 
                 } catch (e: KafkaException) {
-                    e.printStackTrace()
+                    logger.info(e.toString())
                 }
                 for (record in records) {
                     val dataRecord: DataRecord = gson.fromJson(record.value(), DataRecord::class.java)
                     DataStore.recordsArray.add(dataRecord)
                     if (DataStore.recordsArray.size == 1)
-                        println("\nOffset :: " + record.offset())
+                        logger.info("\nOffset :: " + record.offset())
                     c++
                 }
 
 
                 if (DataStore.recordsArray.size > 0) {
-                    println("Got " + DataStore.recordsArray.size + " records")
+                    logger.info("Got " + DataStore.recordsArray.size + " records")
                     total = total + c
                     var Heap: HashMap<String, DataRecord> = AggregatorService.aggregate(DataStore.recordsArray)
                     var t1 = Date().time
                     DatabaseService.save(Heap)
                     var t2 = Date().time
-                    println("Time :: " + (t2 - t1))
+                    logger.debug("Time :: " + (t2 - t1))
+                    println("h")
                     consumer?.commitSync()
 
                 }
