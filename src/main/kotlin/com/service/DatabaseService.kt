@@ -25,7 +25,6 @@ object DatabaseService {
             heap.forEach {
                 NormalizedUrlDao.add(it.value)
             }
-            NormalizedUrlDao.flush()
             OrginalUrlDao.setConnection(con)
             heap.forEach {
                 OrginalUrlDao.Add(it.value)
