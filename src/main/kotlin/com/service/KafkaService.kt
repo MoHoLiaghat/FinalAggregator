@@ -21,6 +21,7 @@ object KafkaService {
     fun getKafkaConsumer(): KafkaConsumer<String, String>? {
         val props = Properties()
         props["bootstrap.servers"] = Config.Bootstrap_servers
+        props["fetch.min.bytes"] = "30000000"
         props["group.id"] = Config.Group_id
         props["enable.auto.commit"] = Config.Enable_auto_commit
         props["auto.commit.interval.ms"] = Config.Auto_commit_interval_ms
