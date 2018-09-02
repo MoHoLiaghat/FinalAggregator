@@ -10,6 +10,7 @@ object AggregatorService {
      * aggregating the arraylist of dataRecords
      *  @param  <ArrayList> of dataRecord objects
      * @return  Hashmap of aggregated records
+     * @author Reza Varmazyari
      */
 
     fun aggregate(a: ArrayList<DataRecord>): HashMap<String, DataRecord> {

@@ -9,6 +9,7 @@ import java.sql.SQLException
 
 /**
  * data access object of normalized urls.
+ * @author Reza Varmazyari
  */
 
 

@@ -4,17 +4,19 @@ import com.dao.NormalizedUrlDao
 import com.dao.OrginalUrlDao
 import com.model.DataRecord
 import com.model.DataStore
+import mu.KotlinLogging
 import java.sql.SQLException
 
 
 object DatabaseService {
 
-
+private val logger = KotlinLogging.logger{}
 
     /**
      * persisting a hashmap of dataRecords into database
      * @param  hashmap of dataRecords
-     *@exception <SQLException>
+     *@exception <SQLException>.
+     * @author Reza Varmazyari
      */
 
 
@@ -35,7 +37,7 @@ object DatabaseService {
             con?.commit()
         } catch (e: SQLException){
             con?.rollback()
-            e.printStackTrace()
+            logger.error (e){ "DB Error" }
         } finally {
             con?.close()
         }

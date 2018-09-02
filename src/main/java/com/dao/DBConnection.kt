@@ -1,9 +1,15 @@
 import com.config.Config
 import com.zaxxer.hikari.HikariDataSource
+import mu.KotlinLogging
 import java.sql.Connection
 import java.sql.SQLException
 
+/**
+ * @author Reza Varmazyari
+ */
 object DBConnection {
+    private val logger = KotlinLogging.logger{}
+
     val ds = HikariDataSource()
     init {
         ds.setMaximumPoolSize(50)
@@ -18,7 +24,7 @@ object DBConnection {
         return try{
             ds.getConnection()
         } catch(e: SQLException){
-            e.printStackTrace()
+            logger.error (e){"DB Connection Error"}
             null
         }
     }

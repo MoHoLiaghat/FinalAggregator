@@ -2,16 +2,18 @@ package com.service
 
 import com.config.Config
 import kafka.common.KafkaException
+import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import java.util.*
 
 object KafkaService {
 
+    private val logger = KotlinLogging.logger{}
 
 
     /**
      *  Instanting a kafka consumer
-
+     *  @author Aryan Gholamlou , Mohammad hossein Liaghat
      *  @exception <RuntimeException>
      *  @property  "bootstrap.servers"           a list of host/port pairs to use for establishing the initial connection to the Kafka cluster.
      *  @property   "group.id"                  a unique string that identifies the consumer group this consumer belongs to.
@@ -23,6 +25,7 @@ object KafkaService {
      *  @property   "max.poll.records"          the maximum number of records returned in a single call to poll().
      *  @property   "max.poll.interval.ms"      the maximum delay between invocations of poll() when using consumer group management
      *  @property   "fetch.message.max.bytes"   the number of bytes of messages to attempt to fetch for each topic-partition in each fetch request.
+     *
      */
 
     fun getKafkaConsumer(): KafkaConsumer<String, String>? {
@@ -41,7 +44,7 @@ object KafkaService {
         try {
             consumer = KafkaConsumer<String, String>(props)
         } catch (e: KafkaException) {
-            e.printStackTrace()
+            logger.error(e) { "kafka consumer error" }
         }
         /**
          *  prepare a kafka consumer

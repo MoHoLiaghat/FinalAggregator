@@ -7,7 +7,7 @@ import java.sql.SQLException
 
 /**
  * data access object of orginal urls.
- *
+ * @author Reza Varmazyari
  *
  */
 
