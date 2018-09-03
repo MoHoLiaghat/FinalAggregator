@@ -16,15 +16,15 @@ object AggregatorService {
     fun aggregate(arrayOfDataRecords: ArrayList<DataRecord>): HashMap<String, DataRecord> {
         var heap = hashMapOf<String, DataRecord>()
         arrayOfDataRecords.forEach {
-            if (heap.get(it.normalizedUrl) == null)
-                heap.put(it.normalizedUrl, it)
+            if (heap[it.normalizedUrl] == null)
+                heap[it.normalizedUrl] = it
             else {
-                var dataRecord: DataRecord = heap.get(it.normalizedUrl) as DataRecord
+                var dataRecord: DataRecord = heap[it.normalizedUrl] as DataRecord
                 dataRecord.count++
                 it.originalUrls.forEach {
                     dataRecord.originalUrls.add(it)
                 }
-                heap.put(it.normalizedUrl, dataRecord)
+                heap[it.normalizedUrl] = dataRecord
             }
         }
         return heap

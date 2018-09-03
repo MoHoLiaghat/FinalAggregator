@@ -11,20 +11,20 @@ import java.sql.SQLException
  */
 object DBConnection {
     private val logger = KotlinLogging.logger{}
-    var timeOut:Long = 1000
-    val ds = HikariDataSource()
+    private var timeOut:Long = 1000
+    private val ds = HikariDataSource()
     init {
-        ds.setMaximumPoolSize(50)
-        ds.setDriverClassName(Config.driver)
-        ds.setJdbcUrl(Config.jdbcUrl)
-        ds.setUsername(Config.username)
-        ds.setPassword(Config.password)
+        ds.maximumPoolSize = 50
+        ds.driverClassName = Config.driver
+        ds.jdbcUrl = Config.jdbcUrl
+        ds.username = Config.username
+        ds.password = Config.password
 
     }
 
     fun getConnection(): Connection? {
         return try{
-            ds.getConnection()
+            ds.connection
         } catch (e: ConnectException){
             logger.error(e) { "DB Connection Error" }
             null

@@ -18,7 +18,7 @@ object NormalizedUrlDao {
     private val logger = KotlinLogging.logger{}
 
     var con: Connection? = null
-    var preparedStatement:PreparedStatement? = null
+    private var preparedStatement:PreparedStatement? = null
 
     fun setConnection(conn: Connection?) {
         con = conn
@@ -28,7 +28,6 @@ object NormalizedUrlDao {
     fun add(dataRecord: DataRecord) {
         val hash = DigestUtils.sha1Hex(dataRecord.normalizedUrl)
         var normalizedUrl = dataRecord.normalizedUrl.replace("\"","")
-        val addQuery =
         try{
             preparedStatement?.setString(1,hash)
             preparedStatement?.setString(2,normalizedUrl)

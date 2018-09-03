@@ -51,12 +51,12 @@ private val logger = KotlinLogging.logger{}
         } finally {
             con?.close()
         }
-        if(allSaveSuccess){
+        return if(allSaveSuccess){
             DataStore.recordsArray.removeAll(DataStore.recordsArray)
-            return true
+            true
         }
         else
-            return false
+            false
     }
 
 }

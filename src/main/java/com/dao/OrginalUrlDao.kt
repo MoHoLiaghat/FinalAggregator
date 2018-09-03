@@ -16,7 +16,7 @@ import java.sql.SQLException
 
 object OrginalUrlDao {
     var con: Connection? = null
-    var preparedStatement:PreparedStatement? = null
+    private var preparedStatement:PreparedStatement? = null
 
 
     fun setConnection(conn: Connection?) {

@@ -5,10 +5,8 @@ import com.google.gson.Gson
 import com.model.DataRecord
 import com.model.DataStore
 import kafka.common.KafkaException
-import kafka.security.auth.Topic
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.ConsumerRecords
-import org.apache.kafka.common.TopicPartition
 import java.time.Duration
 import java.util.*
 
@@ -52,9 +50,9 @@ object ConsumerService {
 
             if (DataStore.recordsArray.size > 0) {
                 logger.info("Got " + DataStore.recordsArray.size + " records")
-                var Heap: HashMap<String, DataRecord> = AggregatorService.aggregate(DataStore.recordsArray)
+                var heap: HashMap<String, DataRecord> = AggregatorService.aggregate(DataStore.recordsArray)
                 var t1 = Date().time
-                saveSuccess = DatabaseService.save(Heap)
+                saveSuccess = DatabaseService.save(heap)
                 logger.info("Saved :: $saveSuccess")
                 var t2 = Date().time
                 logger.info("Time :: " + (t2 - t1))
@@ -63,13 +61,6 @@ object ConsumerService {
                 }
 
             }
-
-            //if(Config.Read_from_beginning){
-//                    consumer?.seek(TopicPartition("rahkar_test" , Integer.parseInt(records.partitions().toString())) , 0L)
-//           consumer!!.seekToBeginning(listOf())
-            //  consumer!!.poll(Duration.ofNanos(1))
-
-
 
         }
     }

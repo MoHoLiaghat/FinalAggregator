@@ -43,7 +43,7 @@ object KafkaService {
 
         var consumer:KafkaConsumer<String, String>? = null
         try {
-            consumer = KafkaConsumer<String, String>(props)
+            consumer = KafkaConsumer(props)
         } catch (e: KafkaException) {
             logger.error(e) { "kafka consumer error" }
         }
