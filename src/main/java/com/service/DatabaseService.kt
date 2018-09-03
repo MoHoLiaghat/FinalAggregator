@@ -4,7 +4,9 @@ import com.dao.NormalizedUrlDao
 import com.dao.OrginalUrlDao
 import com.model.DataRecord
 import com.model.DataStore
+import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException
 import mu.KotlinLogging
+import java.io.IOException
 import java.sql.SQLException
 
 
@@ -20,8 +22,10 @@ private val logger = KotlinLogging.logger{}
      */
 
 
-    fun save(heap: HashMap<String, DataRecord>) {
-        var c = 0
+    fun save(heap: HashMap<String, DataRecord>):Boolean {
+
+
+        var allSaveSuccess = false
         val con = DBConnection.getConnection()
         try {
             con?.autoCommit = false
@@ -29,19 +33,30 @@ private val logger = KotlinLogging.logger{}
             heap.forEach {
                 NormalizedUrlDao.add(it.value)
             }
+            NormalizedUrlDao.flush()
             OrginalUrlDao.setConnection(con)
             heap.forEach {
-                OrginalUrlDao.Add(it.value)
+                OrginalUrlDao.add(it.value)
             }
             OrginalUrlDao.flush()
             con?.commit()
+            allSaveSuccess = true
+        } catch (e: KotlinNullPointerException){
+            logger.error (e){ "DB Connection Error" }
+            allSaveSuccess = false
         } catch (e: SQLException){
             con?.rollback()
-            logger.error (e){ "DB Error" }
+            logger.error (e){ "DB Write Error" }
+            allSaveSuccess = false
         } finally {
             con?.close()
         }
-        DataStore.recordsArray.removeAll(DataStore.recordsArray)
+        if(allSaveSuccess){
+            DataStore.recordsArray.removeAll(DataStore.recordsArray)
+            return true
+        }
+        else
+            return false
     }
 
 }

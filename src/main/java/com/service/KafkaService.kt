@@ -30,16 +30,17 @@ object KafkaService {
 
     fun getKafkaConsumer(): KafkaConsumer<String, String>? {
         val props = Properties()
-        props["bootstrap.servers"] = Config.Bootstrap_servers
-        props["group.id"] = Config.Group_id
-        props["enable.auto.commit"] = Config.Enable_auto_commit
-        props["auto.commit.interval.ms"] = Config.Auto_commit_interval_ms
-        props["key.deserializer"] = Config.Key_deserializer
-        props["value.deserializer"] = Config.Value_deserializer
-        props["auto.offset.reset"] = Config.Auto_offset_reset
-        props["max.poll.records"] = Config.Max_poll_records
-        props["max.poll.interval.ms"] = Config.Max_poll_interval_ms
-        props["fetch.message.max.bytes"] = "1048576"
+        props["bootstrap.servers"] = Config.bootstrapServers
+        props["group.id"] = Config.groupId
+        props["enable.auto.commit"] = Config.enableAutoCommit
+        props["auto.commit.interval.ms"] = Config.autoCommitIntervalMs
+        props["key.deserializer"] = Config.keyDeserializer
+        props["value.deserializer"] = Config.valueDeserializer
+        props["auto.offset.reset"] = Config.autoOffsetReset
+        props["max.poll.records"] = Config.maxPollRecords
+        props["max.poll.interval.ms"] = Config.maxPollIntervalMs
+        props["fetch.message.max.bytes"] = Config.fetchMessageMaxBytes
+
         var consumer:KafkaConsumer<String, String>? = null
         try {
             consumer = KafkaConsumer<String, String>(props)

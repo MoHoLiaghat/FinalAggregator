@@ -3,6 +3,7 @@ package com.dao
 import com.model.DataRecord
 import org.apache.commons.codec.digest.DigestUtils
 import java.sql.Connection
+import java.sql.PreparedStatement
 import java.sql.SQLException
 
 /**
@@ -16,6 +17,8 @@ import java.sql.SQLException
 object OrginalUrlDao {
     var con: Connection? = null
     var addQueryBuilder = StringBuilder()
+    var preparedStatement:PreparedStatement? = null
+
     init {
         addQueryBuilder.append("INSERT INTO orginalUrl (url,normalizedUrl) VALUES ")
     }
@@ -23,25 +26,19 @@ object OrginalUrlDao {
 
     fun setConnection(conn: Connection?) {
         con = conn
+        preparedStatement = con?.prepareStatement("INSERT INTO orginalUrl (url,normalizedUrl) VALUES (? , ?);")
+
     }
 
-    fun Add(dataRecord: DataRecord) {
+    fun add(dataRecord: DataRecord) {
         dataRecord.originalUrls.forEach {
-            addQueryBuilder.append("(\"")
-            addQueryBuilder.append(it)
-            addQueryBuilder.append("\" , \"")
-            addQueryBuilder.append(DigestUtils.sha1Hex(dataRecord.normalizedUrl))
-            addQueryBuilder.append("\"),")
+            preparedStatement?.setString(1,it)
+            preparedStatement?.setString(2,DigestUtils.sha1Hex(dataRecord.normalizedUrl))
+            preparedStatement?.addBatch()
         }
     }
 
     fun flush() {
-        if (addQueryBuilder.equals("INSERT INTO orginalUrl (url,normalizedUrl) VALUES "))
-            return
-        addQueryBuilder.setLength(addQueryBuilder.length-1)
-        addQueryBuilder.append(";")
-        con?.prepareStatement(addQueryBuilder.toString())!!.executeUpdate()
-        addQueryBuilder.setLength(0)
-        addQueryBuilder.append("INSERT INTO orginalUrl (url,normalizedUrl) VALUES ")
+      preparedStatement?.executeBatch()
     }
 }
