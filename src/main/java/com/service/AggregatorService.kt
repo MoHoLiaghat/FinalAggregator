@@ -13,9 +13,9 @@ object AggregatorService {
      * @author Reza Varmazyari
      */
 
-    fun aggregate(a: ArrayList<DataRecord>): HashMap<String, DataRecord> {
+    fun aggregate(arrayOfDataRecords: ArrayList<DataRecord>): HashMap<String, DataRecord> {
         var heap = hashMapOf<String, DataRecord>()
-        a.forEach {
+        arrayOfDataRecords.forEach {
             if (heap.get(it.normalizedUrl) == null)
                 heap.put(it.normalizedUrl, it)
             else {
