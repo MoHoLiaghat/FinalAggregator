@@ -10,7 +10,7 @@ object Config {
     const val password = "123"
     const val driver = "com.mysql.jdbc.Driver"
     const val bootstrapServers = "192.168.1.51:9092"
-    var groupId = "Group_id_40"
+    var groupId = "Group_id_41"
     const val enableAutoCommit = false
     const val autoCommitIntervalMs = 1000
     const val keyDeserializer = "org.apache.kafka.common.serialization.StringDeserializer"

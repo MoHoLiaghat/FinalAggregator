@@ -16,24 +16,20 @@ import java.sql.SQLException
 
 object OrginalUrlDao {
     var con: Connection? = null
-    var addQueryBuilder = StringBuilder()
     var preparedStatement:PreparedStatement? = null
-
-    init {
-        addQueryBuilder.append("INSERT INTO orginalUrl (url,normalizedUrl) VALUES ")
-    }
 
 
     fun setConnection(conn: Connection?) {
         con = conn
-        preparedStatement = con?.prepareStatement("INSERT INTO orginalUrl (url,normalizedUrl) VALUES (? , ?);")
+        preparedStatement = con?.prepareStatement("INSERT INTO orginalUrl (url,hash,normalizedUrl) VALUES (? , ? , ?) on duplicate key update hash = hash;")
 
     }
 
     fun add(dataRecord: DataRecord) {
         dataRecord.originalUrls.forEach {
             preparedStatement?.setString(1,it)
-            preparedStatement?.setString(2,DigestUtils.sha1Hex(dataRecord.normalizedUrl))
+            preparedStatement?.setString(2,DigestUtils.sha1Hex(it))
+            preparedStatement?.setString(3,DigestUtils.sha1Hex(dataRecord.normalizedUrl))
             preparedStatement?.addBatch()
         }
     }
