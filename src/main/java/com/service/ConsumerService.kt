@@ -35,7 +35,7 @@ object ConsumerService {
             var records: ConsumerRecords<String, String> = ConsumerRecords.empty()
             if (saveSuccess) {
                 try {
-                    records = consumer!!.poll(Duration.ofNanos(1))
+                    records = consumer!!.poll(Duration.ofMinutes(1))
 
                 } catch (e: KafkaException) {
                     logger.error(e) { "Kafka Error" }
