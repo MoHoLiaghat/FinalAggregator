@@ -1,4 +1,4 @@
-package com
+package ir.sls.aggregator
 
 import java.security.SecureRandom
 

@@ -1,4 +1,4 @@
-import com.service.ConsumerService
+import ir.sls.aggregator.service.ConsumerService
 
 /**
  *  Logging by Mohammad hossein Liaghat

@@ -1,6 +1,6 @@
-package com.dao
+package ir.sls.aggregator.dao
 
-import com.model.DataRecord
+import ir.sls.aggregator.model.DataRecord
 import com.mysql.jdbc.exceptions.jdbc4.MySQLSyntaxErrorException
 import mu.KotlinLogging
 import org.apache.commons.codec.digest.DigestUtils

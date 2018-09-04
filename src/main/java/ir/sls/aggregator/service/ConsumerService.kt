@@ -1,24 +1,36 @@
-package com.service
+package ir.sls.aggregator.service
 
-import com.config.Config
+import ir.sls.aggregator.config.Config
 import com.google.gson.Gson
-import com.model.DataRecord
-import com.model.DataStore
+import ir.sls.aggregator.model.DataRecord
+import ir.sls.aggregator.model.DataStore
 import kafka.common.KafkaException
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import java.time.Duration
 import java.util.*
+import kotlin.collections.ArrayList
 
 object ConsumerService {
     private val logger = KotlinLogging.logger {}
 
     /**
-     * gathering date and aggregate and persist
+     * gathering date and aggregate  then persist in Database (MySql)
      * @return persist in database
      * @exception <kafkaException>
-     * @author Aryan Gholamlou , Reza Varmazyari
+     * @author Aryan Gholamlou , Reza Varmazyari , Email : Aryan.gholamlou@gmail.com ,  the.alxan@gmail.com
      */
+
+    fun aggregateAndPersist(recordsArray:ArrayList<DataRecord>):Boolean{
+        logger.info("Got ${DataStore.recordsArray.size} records")
+        var heap: HashMap<String, DataRecord> = AggregatorService.aggregate(recordsArray)
+        var t1 = Date().time
+        val saveSuccess = DatabaseService.save(heap)
+        logger.info("Saved :: $saveSuccess")
+        var t2 = Date().time
+        logger.info("Time :: " + (t2 - t1))
+        return saveSuccess
+    }
 
     fun consume() {
         val gson = Gson().newBuilder().create()
@@ -49,17 +61,10 @@ object ConsumerService {
 
 
             if (DataStore.recordsArray.size > 0) {
-                logger.info("Got " + DataStore.recordsArray.size + " records")
-                var heap: HashMap<String, DataRecord> = AggregatorService.aggregate(DataStore.recordsArray)
-                var t1 = Date().time
-                saveSuccess = DatabaseService.save(heap)
-                logger.info("Saved :: $saveSuccess")
-                var t2 = Date().time
-                logger.info("Time :: " + (t2 - t1))
+                saveSuccess = aggregateAndPersist(DataStore.recordsArray)
                 if (saveSuccess) {
                     consumer?.commitSync()
                 }
-
             }
 
         }
