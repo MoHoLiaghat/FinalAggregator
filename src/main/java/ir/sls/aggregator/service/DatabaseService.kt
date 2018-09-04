@@ -1,12 +1,11 @@
-package com.service
+package ir.sls.aggregator.service
 
-import com.dao.NormalizedUrlDao
-import com.dao.OrginalUrlDao
-import com.model.DataRecord
-import com.model.DataStore
-import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException
+import ir.sls.aggregator.config.Config
+import ir.sls.aggregator.dao.NormalizedUrlDao
+import ir.sls.aggregator.dao.OriginalUrlDao
+import ir.sls.aggregator.model.DataRecord
+import ir.sls.aggregator.model.DataStore
 import mu.KotlinLogging
-import java.io.IOException
 import java.sql.SQLException
 
 
@@ -21,12 +20,25 @@ private val logger = KotlinLogging.logger{}
      * @author Reza Varmazyari
      */
 
+    var jdbcUrl = Config.jdbcUrl
+    var username = Config.username
+    var password = Config.password
+    var driver = Config.driver
+
+
+    fun setProperties(jdbcUrl2:String ,username2:String, password2:String,driver2:String  ){
+        jdbcUrl = jdbcUrl2
+        username = username2
+        password = password2
+        driver = driver2
+    }
+
 
     fun save(heap: HashMap<String, DataRecord>):Boolean {
 
 
         var allSaveSuccess = false
-        val con = DBConnection.getConnection()
+        val con = DBConnection.getConnection(driver, jdbcUrl, username, password)
         try {
             con?.autoCommit = false
             NormalizedUrlDao.setConnection(con)
@@ -34,11 +46,11 @@ private val logger = KotlinLogging.logger{}
                 NormalizedUrlDao.add(it.value)
             }
             NormalizedUrlDao.flush()
-            OrginalUrlDao.setConnection(con)
+            OriginalUrlDao.setConnection(con)
             heap.forEach {
-                OrginalUrlDao.add(it.value)
+                OriginalUrlDao.add(it.value)
             }
-            OrginalUrlDao.flush()
+            OriginalUrlDao.flush()
             con?.commit()
             allSaveSuccess = true
         } catch (e: KotlinNullPointerException){

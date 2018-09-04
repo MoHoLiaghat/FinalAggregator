@@ -1,6 +1,6 @@
-package com.dao
+package ir.sls.aggregator.dao
 
-import com.model.DataRecord
+import ir.sls.aggregator.model.DataRecord
 import org.apache.commons.codec.digest.DigestUtils
 import java.sql.Connection
 import java.sql.PreparedStatement
@@ -14,7 +14,7 @@ import java.sql.SQLException
 
 
 
-object OrginalUrlDao {
+object OriginalUrlDao {
     var con: Connection? = null
     private var preparedStatement:PreparedStatement? = null
 

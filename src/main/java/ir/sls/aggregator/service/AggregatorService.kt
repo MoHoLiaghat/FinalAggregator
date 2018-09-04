@@ -1,6 +1,6 @@
-package com.service
+package ir.sls.aggregator.service
 
-import com.model.DataRecord
+import ir.sls.aggregator.model.DataRecord
 import java.util.ArrayList
 
 object AggregatorService {
@@ -20,7 +20,7 @@ object AggregatorService {
                 heap[it.normalizedUrl] = it
             else {
                 var dataRecord: DataRecord = heap[it.normalizedUrl] as DataRecord
-                dataRecord.count++
+                dataRecord.count += it.count
                 it.originalUrls.forEach {
                     dataRecord.originalUrls.add(it)
                 }

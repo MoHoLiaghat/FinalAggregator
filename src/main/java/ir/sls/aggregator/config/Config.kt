@@ -1,4 +1,4 @@
-package com.config
+package ir.sls.aggregator.config
 
 /**
  * @author Reza Varmazyari , Mohammad hossein Liaghat
@@ -20,7 +20,9 @@ object Config {
     const val subscribtion =  "rahkar_test"
     const val maxPollIntervalMs = Integer.MAX_VALUE
     const val readFromBeginning = true
-    const val databaseConnectionTimeout:Long = 64000
+    const val databaseConnectionMaxTimeout:Long = 64000L
     const val fetchMessageMaxBytes = 1048576
+    const val maximumPoolSize = 50
+    const val databaseConnectionTimeout = 1000L
 
 }

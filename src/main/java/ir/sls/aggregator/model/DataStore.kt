@@ -1,4 +1,4 @@
-package com.model
+package ir.sls.aggregator.model
 
 
 /**

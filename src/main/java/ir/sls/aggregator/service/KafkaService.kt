@@ -1,6 +1,6 @@
-package com.service
+package ir.sls.aggregator.service
 
-import com.config.Config
+import ir.sls.aggregator.config.Config
 import kafka.common.KafkaException
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.KafkaConsumer
