@@ -37,6 +37,7 @@ class AggregatorTest: DatabaseTest("/CreateTables.sql") {
         val dataRecord2 = DataRecord("normalizedUrl2", arrayListOf("orginalUrl2", "orginalUrl3", "orginalUrl4", "orginalUrl3", "orginalUrl5", "orginalUrl3"), 6)
         heap["normalizedUrl1"] = dataRecord1
         heap["normalizedUrl2"] = dataRecord2
+        // Amin: Use assert4j
         assertEquals(heap, AggregatorService.aggregate(getDataForAggregation()))
     }
 

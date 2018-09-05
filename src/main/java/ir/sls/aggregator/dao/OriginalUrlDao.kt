@@ -12,19 +12,16 @@ import java.sql.SQLException
  *
  */
 
-
-
 object OriginalUrlDao {
     var con: Connection? = null
     private var preparedStatement:PreparedStatement? = null
 
-
     fun setConnection(conn: Connection?) {
         con = conn
         preparedStatement = con?.prepareStatement("INSERT INTO orginalUrl (url,hash,normalizedUrl) VALUES (? , ? , ?) on duplicate key update hash = hash;")
-
     }
 
+    // Amin: add and flush can be merged.
     fun add(dataRecord: DataRecord) {
         dataRecord.originalUrls.forEach {
             preparedStatement?.setString(1,it)

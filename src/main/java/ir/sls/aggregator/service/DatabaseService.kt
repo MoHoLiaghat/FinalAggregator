@@ -8,7 +8,6 @@ import ir.sls.aggregator.model.DataStore
 import mu.KotlinLogging
 import java.sql.SQLException
 
-
 object DatabaseService {
 
 private val logger = KotlinLogging.logger{}
@@ -38,6 +37,7 @@ private val logger = KotlinLogging.logger{}
 
 
         var allSaveSuccess = false
+        // Amin: Use .use for resource management
         val con = DBConnection.getConnection(driver, jdbcUrl, username, password)
         try {
             con?.autoCommit = false
@@ -55,6 +55,7 @@ private val logger = KotlinLogging.logger{}
             allSaveSuccess = true
         } catch (e: KotlinNullPointerException){
             logger.error (e){ "DB Connection Error" }
+            // Amin: false assignments can be eliminated sue to first assignment (var allSaveSuccess = false)
             allSaveSuccess = false
         } catch (e: SQLException){
             con?.rollback()
@@ -64,6 +65,7 @@ private val logger = KotlinLogging.logger{}
             con?.close()
         }
         return if(allSaveSuccess){
+            // Amin: DataStore.recordsArray.clear() can be used.
             DataStore.recordsArray.removeAll(DataStore.recordsArray)
             true
         }
