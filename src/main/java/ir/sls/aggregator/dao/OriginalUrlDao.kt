@@ -7,34 +7,30 @@ import java.sql.PreparedStatement
 import java.sql.SQLException
 
 /**
- * data access object of orginal urls.
+ * data access object of original urls. creates a batch of originalUrls and then when the batch reaches
+ * to a specified value , persists the batch to database
  * @author Reza Varmazyari
  *
  */
-
-
 
 object OriginalUrlDao {
     var con: Connection? = null
     private var preparedStatement:PreparedStatement? = null
 
-
     fun setConnection(conn: Connection?) {
         con = conn
         preparedStatement = con?.prepareStatement("INSERT INTO orginalUrl (url,hash,normalizedUrl) VALUES (? , ? , ?) on duplicate key update hash = hash;")
-
     }
 
-    fun add(dataRecord: DataRecord) {
-        dataRecord.originalUrls.forEach {
-            preparedStatement?.setString(1,it)
-            preparedStatement?.setString(2,DigestUtils.sha1Hex(it))
-            preparedStatement?.setString(3,DigestUtils.sha1Hex(dataRecord.normalizedUrl))
-            preparedStatement?.addBatch()
+    fun persist(heap:HashMap<String,DataRecord>){
+        heap.forEach{
+            it.value.originalUrls.forEach { itt:String ->
+                preparedStatement?.setString(1,itt)
+                preparedStatement?.setString(2,DigestUtils.sha1Hex(itt))
+                preparedStatement?.setString(3,DigestUtils.sha1Hex(it.value.normalizedUrl))
+                preparedStatement?.addBatch()
+            }
         }
-    }
-
-    fun flush() {
-      preparedStatement?.executeBatch()
+        preparedStatement?.executeBatch()
     }
 }

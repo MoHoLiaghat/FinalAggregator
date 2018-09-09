@@ -6,11 +6,11 @@ import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.KafkaConsumer
 import java.util.*
 
+// Amin: Rename class to KafkaFactory
 object KafkaService {
-
     private val logger = KotlinLogging.logger{}
 
-
+    // Amin: put properties documentation in Config object.
     /**
      *  Instanting a kafka consumer
      *  @author Aryan Gholamlou , Mohammad hossein Liaghat
@@ -25,28 +25,30 @@ object KafkaService {
      *  @property   "max.poll.records"          the maximum number of records returned in a single call to poll().
      *  @property   "max.poll.interval.ms"      the maximum delay between invocations of poll() when using consumer group management
      *  @property   "fetch.message.max.bytes"   the number of bytes of messages to attempt to fetch for each topic-partition in each fetch request.
-     *
      */
-
+    // Amin: It is better to rename this method to createKafkaConsumer.
     fun getKafkaConsumer(): KafkaConsumer<String, String>? {
         val props = Properties()
-        props["bootstrap.servers"] = Config.bootstrapServers
-        props["group.id"] = Config.groupId
-        props["enable.auto.commit"] = Config.enableAutoCommit
-        props["auto.commit.interval.ms"] = Config.autoCommitIntervalMs
-        props["key.deserializer"] = Config.keyDeserializer
-        props["value.deserializer"] = Config.valueDeserializer
-        props["auto.offset.reset"] = Config.autoOffsetReset
-        props["max.poll.records"] = Config.maxPollRecords
-        props["max.poll.interval.ms"] = Config.maxPollIntervalMs
-        props["fetch.message.max.bytes"] = Config.fetchMessageMaxBytes
+        props["bootstrap.servers"] = Config.Kafka.bootstrapServers
+        props["group.id"] = Config.Kafka.groupId
+        props["enable.auto.commit"] = Config.Kafka.enableAutoCommit
+        props["auto.commit.interval.ms"] = Config.Kafka.autoCommitIntervalMs
+        props["key.deserializer"] = Config.Kafka.keyDeserializer
+        props["value.deserializer"] = Config.Kafka.valueDeserializer
+        props["auto.offset.reset"] = Config.Kafka.autoOffsetReset
+        props["max.poll.records"] = Config.Kafka.maxPollRecords
+        props["max.poll.interval.ms"] = Config.Kafka.maxPollIntervalMs
+        props["fetch.message.max.bytes"] = Config.Kafka.fetchMessageMaxBytes
 
         var consumer:KafkaConsumer<String, String>? = null
         try {
             consumer = KafkaConsumer(props)
         } catch (e: KafkaException) {
+            // Amin: better message -> Cannot create Kafka consumer.
+            // Amin: If Kafka is down, Aggregator should not run
             logger.error(e) { "kafka consumer error" }
         }
+        // Amin: This documentation should be before method.
         /**
          *  prepare a kafka consumer
          *  @return a Kafka consumer , map of Strings

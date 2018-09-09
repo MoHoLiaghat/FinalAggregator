@@ -3,7 +3,6 @@ package ir.sls.aggregator.service
 import ir.sls.aggregator.config.Config
 import com.google.gson.Gson
 import ir.sls.aggregator.model.DataRecord
-import ir.sls.aggregator.model.DataStore
 import kafka.common.KafkaException
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.ConsumerRecords
@@ -11,37 +10,36 @@ import java.time.Duration
 import java.util.*
 import kotlin.collections.ArrayList
 
-object ConsumerService {
-    private val logger = KotlinLogging.logger {}
+/**
+ * gathering date and aggregate  then persist in Database (MySql)
+ * @return persist in database
+ * @exception <kafkaException>
+ * @author Aryan Gholamlou , Reza Varmazyari , Email : Aryan.gholamlou@gmail.com ,  the.alxan@gmail.com
+ */
 
-    /**
-     * gathering date and aggregate  then persist in Database (MySql)
-     * @return persist in database
-     * @exception <kafkaException>
-     * @author Aryan Gholamlou , Reza Varmazyari , Email : Aryan.gholamlou@gmail.com ,  the.alxan@gmail.com
-     */
+class ConsumerService {
+    private val logger = KotlinLogging.logger {}
 
     fun aggregateAndPersist(recordsArray:ArrayList<DataRecord>):Boolean{
         logger.info("Got ${DataStore.recordsArray.size} records")
-        var heap: HashMap<String, DataRecord> = AggregatorService.aggregate(recordsArray)
-        var t1 = Date().time
+        val heap: HashMap<String, DataRecord> = AggregatorService.aggregate(recordsArray)
+        val t1 = Date().time
         val saveSuccess = DatabaseService.save(heap)
         logger.info("Saved :: $saveSuccess")
-        var t2 = Date().time
+        val t2 = Date().time
         logger.info("Time :: " + (t2 - t1))
         return saveSuccess
     }
 
-    fun consume() {
-        val gson = Gson().newBuilder().create()
+    fun start() {
+        val gson = Gson().newBuilder().disableHtmlEscaping().create()
         var saveSuccess = true
-        val consumer = KafkaService.getKafkaConsumer()
-        consumer?.subscribe(Arrays.asList(Config.subscribtion))
-        if(Config.readFromBeginning)
+        val consumer = KafkaFactory.createKafkaConsumer() ?: throw IllegalStateException()
+        consumer?.subscribe(arrayListOf(Config.Kafka.subscribtion))
+        if(Config.Kafka.readFromBeginning)
             consumer?.seekToBeginning(emptyList())
 
         while (true) {
-
             var records: ConsumerRecords<String, String> = ConsumerRecords.empty()
             if (saveSuccess) {
                 try {
@@ -69,5 +67,6 @@ object ConsumerService {
 
         }
     }
+
 
 }

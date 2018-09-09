@@ -27,6 +27,7 @@
         <dependency>
             <groupId>com.zaxxer</groupId>
             <artifactId>HikariCP</artifactId>
+            <!-- Amin: version is old -->
             <version>2.6.1</version>
         </dependency>
 

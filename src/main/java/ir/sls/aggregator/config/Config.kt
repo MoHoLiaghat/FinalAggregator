@@ -1,10 +1,11 @@
 package ir.sls.aggregator.config
 
 /**
- * @author Reza Varmazyari , Mohammad hossein Liaghat
- *
+ * @author Reza Varmazyari
+ * @author Mohammad hossein Liaghat
  */
 object Config {
+    // Amin: group related configs such as Database config, Kafka configs...
     const val jdbcUrl = "jdbc:mysql://localhost:3306/aggregator"
     const val username = "root"
     const val password = "123"
