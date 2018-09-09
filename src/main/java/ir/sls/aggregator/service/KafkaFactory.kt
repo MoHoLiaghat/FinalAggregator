@@ -19,7 +19,6 @@ object KafkaFactory {
      *  @exception <RuntimeException>
 
      */
-    // Amin: It is better to rename this method to createKafkaConsumer.
     fun createKafkaConsumer(): KafkaConsumer<String, String>? {
         val props = Properties()
         props["bootstrap.servers"] = Config.Kafka.bootstrapServers
@@ -37,11 +36,8 @@ object KafkaFactory {
         try {
             consumer = KafkaConsumer(props)
         } catch (e: KafkaException) {
-            // Amin: better message -> Cannot create Kafka consumer.
-            // Amin: If Kafka is down, Aggregator should not run
             logger.error(e) { "Cannot create Kafka consumer" }
         }
-        // Amin: This documentation should be before method.
 
         return consumer
     }
