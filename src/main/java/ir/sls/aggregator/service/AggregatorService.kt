@@ -2,26 +2,23 @@ package ir.sls.aggregator.service
 
 import ir.sls.aggregator.model.DataRecord
 import java.util.ArrayList
-// Amin: out docs before object
+
+/**
+ * aggregating the arraylist of dataRecords
+ *  @param  <ArrayList> of dataRecord objects
+ * @return  Hashmap of aggregated records
+ * @author Reza Varmazyari
+ */
 object AggregatorService {
 
 
-    /**
-     * aggregating the arraylist of dataRecords
-     *  @param  <ArrayList> of dataRecord objects
-     * @return  Hashmap of aggregated records
-     * @author Reza Varmazyari
-     */
-    // Amin: input name is plural and does not need arrayOf prefix
-    fun aggregate(arrayOfDataRecords: ArrayList<DataRecord>): HashMap<String, DataRecord> {
+    fun aggregate(dataRecords: ArrayList<DataRecord>): HashMap<String, DataRecord> {
         var heap = hashMapOf<String, DataRecord>()
-        arrayOfDataRecords.forEach {
-            // Amin: use heap.computeIfAbsent()
+        dataRecords.forEach {
             if (heap[it.normalizedUrl] == null)
                 heap[it.normalizedUrl] = it
             else {
-                // Amin: casting is not required.
-                var dataRecord: DataRecord = heap[it.normalizedUrl] as DataRecord
+                var dataRecord: DataRecord = heap[it.normalizedUrl]!!
                 dataRecord.count += it.count
                 it.originalUrls.forEach {
                     dataRecord.originalUrls.add(it)

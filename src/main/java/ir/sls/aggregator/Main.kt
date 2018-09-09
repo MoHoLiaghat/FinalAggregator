@@ -7,6 +7,7 @@ import ir.sls.aggregator.service.ConsumerService
  */
 // Amin: Consumer can be run by constructor
 fun main(args: Array<String>) {
-    ConsumerService.consume()
+    //Check Constructor
+    ConsumerService().start()
 }
 

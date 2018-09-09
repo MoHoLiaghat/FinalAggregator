@@ -7,27 +7,20 @@ import org.apache.kafka.clients.consumer.KafkaConsumer
 import java.util.*
 
 // Amin: Rename class to KafkaFactory
-object KafkaService {
+object KafkaFactory {
     private val logger = KotlinLogging.logger{}
 
     // Amin: put properties documentation in Config object.
     /**
      *  Instanting a kafka consumer
+     *   prepare a kafka consumer
+     *  @return a Kafka consumer , map of Strings
      *  @author Aryan Gholamlou , Mohammad hossein Liaghat
      *  @exception <RuntimeException>
-     *  @property  "bootstrap.servers"           a list of host/port pairs to use for establishing the initial connection to the Kafka cluster.
-     *  @property   "group.id"                  a unique string that identifies the consumer group this consumer belongs to.
-     *  @property   "enable.auto.commit"        if true the consumer's offset will be periodically committed in the background.
-     *  @property    "auto.commit.interval.ms"    the frequency in milliseconds that the consumer offsets are auto-committed to Kafka
-     *  @property   "key.deserializer"          Deserializer class for key that implements the org.apache.kafka.common.serialization.Deserializer interface.
-     *  @property   "value.deserializer"        Deserializer class for value that implements the org.apache.kafka.common.serialization.Deserializer interface.
-     *  @property   "auto.offset.reset"         what to do when there is no initial offset in Kafka or if the current offset does not exist any more on the server
-     *  @property   "max.poll.records"          the maximum number of records returned in a single call to poll().
-     *  @property   "max.poll.interval.ms"      the maximum delay between invocations of poll() when using consumer group management
-     *  @property   "fetch.message.max.bytes"   the number of bytes of messages to attempt to fetch for each topic-partition in each fetch request.
+
      */
     // Amin: It is better to rename this method to createKafkaConsumer.
-    fun getKafkaConsumer(): KafkaConsumer<String, String>? {
+    fun createKafkaConsumer(): KafkaConsumer<String, String>? {
         val props = Properties()
         props["bootstrap.servers"] = Config.Kafka.bootstrapServers
         props["group.id"] = Config.Kafka.groupId
@@ -46,13 +39,10 @@ object KafkaService {
         } catch (e: KafkaException) {
             // Amin: better message -> Cannot create Kafka consumer.
             // Amin: If Kafka is down, Aggregator should not run
-            logger.error(e) { "kafka consumer error" }
+            logger.error(e) { "Cannot create Kafka consumer" }
         }
         // Amin: This documentation should be before method.
-        /**
-         *  prepare a kafka consumer
-         *  @return a Kafka consumer , map of Strings
-         */
+
         return consumer
     }
 }
