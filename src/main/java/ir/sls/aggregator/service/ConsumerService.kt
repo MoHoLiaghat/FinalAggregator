@@ -32,6 +32,7 @@ class ConsumerService {
     }
 
     fun start() {
+        metricService()
         val gson = Gson().newBuilder().disableHtmlEscaping().create()
         var saveSuccess = true
         val consumer = KafkaFactory.createKafkaConsumer() ?: throw IllegalStateException()
