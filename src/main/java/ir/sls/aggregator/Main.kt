@@ -3,7 +3,6 @@ import com.typesafe.config.ConfigFactory
 import com.typesafe.config.ConfigRenderOptions
 import ir.sls.aggregator.config.Config
 import ir.sls.aggregator.service.ConsumerService
-import ir.sls.aggregator.service.metricService
 
 /**
  *  Logging by Mohammad hossein Liaghat
