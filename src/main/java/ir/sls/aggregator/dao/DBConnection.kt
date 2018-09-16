@@ -1,4 +1,3 @@
-import ir.sls.aggregator.config.Config
 import com.mysql.jdbc.exceptions.jdbc4.CommunicationsException
 import com.zaxxer.hikari.HikariDataSource
 import mu.KotlinLogging
@@ -14,7 +13,7 @@ object DBConnection {
     private val ds = HikariDataSource()
 
     fun setProperties(driver:String,jdbcUrl:String,username:String,password:String) {
-        ds.maximumPoolSize = Config.DataBase.maximumPoolSize
+        ds.maximumPoolSize = ReadConfig.config.DataBase.maximumPoolSize
         ds.driverClassName = driver
         ds.jdbcUrl = jdbcUrl
         ds.username = username

@@ -1,0 +1,29 @@
+DataBase{
+
+
+      	  jdbcUrl = "jdbc:mysql://localhost:3306/aggregator"
+      	  username = root
+     	  password = 123
+      	  driver = "com.mysql.jdbc.Driver"
+          maximumPoolSize = 50
+          databaseConnectionTimeout = 1000
+       	  "databaseConnectionMaxTimeout:Long" = 64000
+    }
+
+
+Kafka{
+     	   bootstrapServers = ["192.168.1.53:9092"]
+      	   groupId = Group_id_44
+     	   enableAutoCommit = false
+    	   autoCommitIntervalMs = 1000
+keyDeserializer = org.apache.kafka.common.serialization.StringDeserializer
+           valueDeserializer = org.apache.kafka.common.serialization.StringDeserializer
+      	   autoOffsetReset = earliest
+     	   maxPollRecords = 10000
+     	   subscribtion = rahkar_test
+     	   maxPollIntervalMs = 2147483647
+     	   readFromBeginning = true
+     	   fetchMessageMaxBytes = 1048576
+    
+}
+

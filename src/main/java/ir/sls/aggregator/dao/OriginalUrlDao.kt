@@ -4,7 +4,6 @@ import ir.sls.aggregator.model.DataRecord
 import org.apache.commons.codec.digest.DigestUtils
 import java.sql.Connection
 import java.sql.PreparedStatement
-import java.sql.SQLException
 
 /**
  * data access object of original urls. creates a batch of originalUrls and then when the batch reaches

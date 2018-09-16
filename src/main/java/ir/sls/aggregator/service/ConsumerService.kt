@@ -1,6 +1,5 @@
 package ir.sls.aggregator.service
 
-import ir.sls.aggregator.config.Config
 import com.google.gson.Gson
 import ir.sls.aggregator.model.DataRecord
 import kafka.common.KafkaException
@@ -35,9 +34,7 @@ class ConsumerService {
         val gson = Gson().newBuilder().disableHtmlEscaping().create()
         var saveSuccess = true
         val consumer = KafkaFactory.createKafkaConsumer() ?: throw IllegalStateException()
-        consumer?.subscribe(arrayListOf(Config.Kafka.subscribtion))
-        if(Config.Kafka.readFromBeginning)
-            consumer?.seekToBeginning(emptyList())
+        consumer?.subscribe(arrayListOf(ReadConfig.config.Kafka.subscribtion))
 
         while (true) {
             var records: ConsumerRecords<String, String> = ConsumerRecords.empty()

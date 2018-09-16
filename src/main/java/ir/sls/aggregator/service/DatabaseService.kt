@@ -1,6 +1,5 @@
 package ir.sls.aggregator.service
 
-import ir.sls.aggregator.config.Config
 import ir.sls.aggregator.dao.NormalizedUrlDao
 import ir.sls.aggregator.dao.OriginalUrlDao
 import ir.sls.aggregator.model.DataRecord
@@ -20,10 +19,10 @@ object DatabaseService {
 private val logger = KotlinLogging.logger{}
 
 
-    var jdbcUrl = Config.DataBase.jdbcUrl
-    var username = Config.DataBase.username
-    var password = Config.DataBase.password
-    var driver = Config.DataBase.driver
+    var jdbcUrl = ReadConfig.config.DataBase.jdbcUrl
+    var username = ReadConfig.config.DataBase.username
+    var password = ReadConfig.config.DataBase.password
+    var driver = ReadConfig.config.DataBase.driver
 
     init {
         DBConnection.setProperties(driver, jdbcUrl, username, password)
@@ -46,10 +45,10 @@ private val logger = KotlinLogging.logger{}
         // Amin: Use .use for resource management
         var con = DBConnection.getConnection()
         while (con == null){
-            var timeOut:Long = Config.DataBase.databaseConnectionTimeout
+            var timeOut:Long = ReadConfig.config.DataBase.databaseConnectionTimeout
             con = DBConnection.getConnection()
             timeOut *= 2
-            if (timeOut == Config.DataBase.databaseConnectionMaxTimeout)
+            if (timeOut == ReadConfig.config.DataBase.databaseConnectionMaxTimeout)
                 timeOut = 1000
             Thread.sleep(timeOut)
         }
