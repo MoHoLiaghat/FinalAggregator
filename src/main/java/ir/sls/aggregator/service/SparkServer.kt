@@ -11,7 +11,7 @@ fun metricService()
 
     var gson = Gson().newBuilder().create()
 
-    get("/number") {
+    get("/metric") {
 
         val metricConfig: String = gson.toJson(getPerMinuteKafka())
 

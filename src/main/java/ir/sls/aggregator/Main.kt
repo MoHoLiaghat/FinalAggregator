@@ -13,7 +13,6 @@ import ir.sls.aggregator.service.metricService
 fun main(args: Array<String>)
 {
     ConsumerService().start()
-    metricService()
 }
 
 object ReadConfig
