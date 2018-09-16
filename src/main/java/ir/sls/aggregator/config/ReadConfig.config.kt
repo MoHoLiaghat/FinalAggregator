@@ -1,8 +1,4 @@
 package ir.sls.aggregator.config
-import com.typesafe.config.ConfigFactory
-import java.io.File
-import com.google.gson.Gson
-import com.typesafe.config.ConfigRenderOptions
 
 /**
  * @author Mohammad Hossein Liaghat Email: mohamadliaghat@gmail.com
@@ -35,10 +31,3 @@ data class Kafka(
         val readFromBeginning: Boolean,
         val fetchMessageMaxBytes: Int
 )
-
-
-fun main(args: Array<String>)
-{
-
-
-}
