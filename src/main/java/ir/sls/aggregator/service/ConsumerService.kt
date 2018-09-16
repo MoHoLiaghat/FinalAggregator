@@ -1,6 +1,7 @@
 package ir.sls.aggregator.service
 
 import com.google.gson.Gson
+import ir.sls.aggregator.metric.InitMeter
 import ir.sls.aggregator.model.DataRecord
 import kafka.common.KafkaException
 import mu.KotlinLogging
@@ -40,7 +41,9 @@ class ConsumerService {
             var records: ConsumerRecords<String, String> = ConsumerRecords.empty()
             if (saveSuccess) {
                 try {
+
                     records = consumer!!.poll(Duration.ofMinutes(1))
+                    InitMeter.markKafkaRead(records.count().toLong())
 
                 } catch (e: KafkaException) {
                     logger.error(e) { "Kafka Error" }
