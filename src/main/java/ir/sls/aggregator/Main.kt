@@ -3,6 +3,7 @@ import com.typesafe.config.ConfigFactory
 import com.typesafe.config.ConfigRenderOptions
 import ir.sls.aggregator.config.Config
 import ir.sls.aggregator.service.ConsumerService
+import ir.sls.aggregator.service.metricService
 
 /**
  *  Logging by Mohammad hossein Liaghat
@@ -12,6 +13,7 @@ import ir.sls.aggregator.service.ConsumerService
 fun main(args: Array<String>)
 {
     ConsumerService().start()
+    metricService()
 }
 
 object ReadConfig
