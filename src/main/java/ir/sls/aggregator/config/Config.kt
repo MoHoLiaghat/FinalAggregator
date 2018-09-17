@@ -9,28 +9,28 @@ package ir.sls.aggregator.config
 data class Config(val dataBase: DataBase, val kafka: Kafka, val spark: Spark, val meter: Meter)
 
 data class DataBase(
-        val jdbcUrl: String,
-        val username: String,
-        val password: String,
-        val driver: String,
-        val maximumPoolSize: Int,
-        val databaseConnectionTimeout: Long,
-        val databaseConnectionMaxTimeout: Long
+        val jdbcUrl: String = "jdbc:mysql://localhost:3306/aggregator",
+        val username: String = "root",
+        val password: String ="123",
+        val driver: String = "com.mysql.jdbc.Driver",
+        val maximumPoolSize: Int = 50,
+        val databaseConnectionTimeout: Long = 1000L,
+        val databaseConnectionMaxTimeout: Long = 64000L
 )
 
 data class Kafka(
-        val bootstrapServers: List<String>,
-        val groupId: String,
-        val enableAutoCommit: Boolean,
-        val autoCommitIntervalMs: Int,
-        val keyDeserializer: String,
-        val valueDeserializer: String,
-        val autoOffsetReset: String,
-        val maxPollRecords: Int,
-        val subscription: String,
-        val maxPollIntervalMs: Int,
-        val readFromBeginning: Boolean,
-        val fetchMessageMaxBytes: Int
+        val bootstrapServers: List<String> = arrayListOf("192.168.1.53:9092"),
+        val groupId: String = "Group_id_44",
+        val enableAutoCommit: Boolean = false,
+        val autoCommitIntervalMs: Int = 1000,
+        val keyDeserializer: String = "org.apache.kafka.common.serialization.StringDeserializer",
+        val valueDeserializer: String = "org.apache.kafka.common.serialization.StringDeserializer",
+        val autoOffsetReset: String = "earliest",
+        val maxPollRecords: Int = 10000,
+        val subscription: String = "rahkar_test",
+        val maxPollIntervalMs: Int = Integer.MAX_VALUE,
+        val readFromBeginning: Boolean = true,
+        val fetchMessageMaxBytes: Int = 1048576
 )
 
 data class Spark(val port: Int)

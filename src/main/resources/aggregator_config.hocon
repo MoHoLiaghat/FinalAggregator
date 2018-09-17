@@ -10,18 +10,18 @@ dataBase{
 
 
 kafka{
-     	   bootstrapServers = ["192.168.1.53:9092"]
-      	   groupId = Group_id_44
-     	   enableAutoCommit = false
-    	   autoCommitIntervalMs = 1000
-keyDeserializer = org.apache.kafka.common.serialization.StringDeserializer
-           valueDeserializer = org.apache.kafka.common.serialization.StringDeserializer
-      	   autoOffsetReset = earliest
-     	   maxPollRecords = 10000
-     	   subscription = rahkar_test
-     	   maxPollIntervalMs = 2147483647
-     	   readFromBeginning = true
-     	   fetchMessageMaxBytes = 1048576
+     	  bootstrapServers = ["192.168.1.53:9092"]
+      	  groupId = Group_id_44
+     	  enableAutoCommit = false
+    	  autoCommitIntervalMs = 1000
+          keyDeserializer = org.apache.kafka.common.serialization.StringDeserializer
+          valueDeserializer = org.apache.kafka.common.serialization.StringDeserializer
+      	  autoOffsetReset = earliest
+     	  maxPollRecords = 10000
+     	  subscription = rahkar_test
+     	  maxPollIntervalMs = 2147483647
+     	  readFromBeginning = true
+     	  fetchMessageMaxBytes = 1048576
 }
 
 
