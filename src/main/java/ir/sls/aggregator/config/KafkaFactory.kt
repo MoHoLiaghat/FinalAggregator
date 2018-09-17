@@ -17,8 +17,8 @@ object KafkaFactory
      *  @return a Kafka consumer , map of Strings
      *  @author Aryan Gholamlou , Mohammad hossein Liaghat
      *  @exception <RuntimeException>
-
      */
+
     fun createKafkaConsumer(): KafkaConsumer<String, String>?
     {
         val props = Properties()

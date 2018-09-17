@@ -1,14 +1,15 @@
 package ir.sls.aggregator.metric
 
 import com.codahale.metrics.MetricRegistry
+import ir.sls.aggregator.config.ReadConfig
 
 /**
  * @author Aryan Gholamlou
  */
 object InitMeter {
     val metrics = MetricRegistry()
-    var kafkaMeter = metrics.meter("kafka-meter")
-    var databaseMeter = metrics.meter("database-meter")
+    var kafkaMeter = metrics.meter(ReadConfig.config.meter.kafkaMeter)
+    var databaseMeter = metrics.meter(ReadConfig.config.meter.databaseMeter)
 
 
     data class MeterClass(var KafkaMeter:Double, var DatabaseMeter:Double)

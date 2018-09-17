@@ -1,6 +1,5 @@
 dataBase{
 
-
       	  jdbcUrl = "jdbc:mysql://localhost:3306/aggregator"
       	  username = root
      	  password = 123
@@ -12,6 +11,7 @@ dataBase{
 
 
 kafka{
+
      	   bootstrapServers = ["192.168.1.53:9092"]
       	   groupId = Group_id_44
      	   enableAutoCommit = false
@@ -28,5 +28,11 @@ keyDeserializer = org.apache.kafka.common.serialization.StringDeserializer
 }
 
 spark{
+
     port = 4641
+}
+
+mter{
+    kafkaMeter = kafka-meter
+    databaseMeter = database-meter
 }
