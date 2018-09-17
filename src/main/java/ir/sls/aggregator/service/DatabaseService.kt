@@ -12,7 +12,7 @@ import java.sql.SQLException
 /**
  * persisting a hashmap of dataRecords into database
  * @param  HashMap of dataRecords
- *@exception <SQLException>.
+ * @exception <SQLException>.
  * @author Reza Varmazyari
  */
 
@@ -80,6 +80,7 @@ private val logger = KotlinLogging.logger{}
     }
 
 }
+
 object DataStore {
     var recordsArray = arrayListOf<DataRecord>()
 }
