@@ -28,9 +28,3 @@ kafka{
 spark{
     port = 4641
 }
-
-
-meter{
-    kafkaMeter = kafka-meter
-    databaseMeter = database-meter
-}

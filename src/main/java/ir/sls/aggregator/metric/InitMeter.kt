@@ -17,8 +17,8 @@ object InitMeter {
      */
 
     val metrics = MetricRegistry()
-    var kafkaMeter = metrics.meter(ReadConfig.config.meter.kafkaMeter)
-    var databaseMeter = metrics.meter(ReadConfig.config.meter.databaseMeter)
+    var kafkaMeter = metrics.meter("kafka-meter")
+    var databaseMeter = metrics.meter("database-meter")
 
 
     data class MeterClass(var KafkaMeter:Double, var DatabaseMeter:Double)

@@ -6,7 +6,7 @@ package ir.sls.aggregator.config
  * The data class in order to figure out the kafka
  */
 
-data class Config(val dataBase: DataBase, val kafka: Kafka, val spark: Spark, val meter: Meter)
+data class Config(val dataBase: DataBase, val kafka: Kafka, val spark: Spark)
 
 data class DataBase(
         val jdbcUrl: String = "jdbc:mysql://localhost:3306/aggregator",
@@ -34,5 +34,3 @@ data class Kafka(
 )
 
 data class Spark(val port: Int)
-
-data class Meter(val kafkaMeter: String, val databaseMeter: String)
