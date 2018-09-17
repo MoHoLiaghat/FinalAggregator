@@ -1,7 +1,3 @@
-import com.google.gson.Gson
-import com.typesafe.config.ConfigFactory
-import com.typesafe.config.ConfigRenderOptions
-import ir.sls.aggregator.config.Config
 import ir.sls.aggregator.service.ConsumerService
 
 /**
