@@ -38,10 +38,11 @@ object InitMeter {
     fun markKafkaRead(l:Long){
         kafkaMeter.mark(l)
 
-     /**
-      * [markKafkaRead] is a function for marking data that write to database
-      */
     }
+
+    /**
+     * [markDatabaseWrite] is a function for marking data that write to database
+     */
     fun markDatabaseWrite(l:Long){
         databaseMeter.mark(l)
 
