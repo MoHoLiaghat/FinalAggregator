@@ -30,7 +30,7 @@ spark{
 }
 
 
-mter{
+meter{
     kafkaMeter = kafka-meter
     databaseMeter = database-meter
 }
