@@ -8,8 +8,8 @@ import java.sql.Connection
 import java.sql.PreparedStatement
 
 /**
- * data access object of normalized urls. creates a batch of normalizedUrls and then when the batch reaches
- * to a specified value , persists the batch to database
+ * data access object of normalized urls. creates a batch of normalizedUrls
+ * and then when the batch reaches to a specified value , persists the batch to database
  * @author Reza Varmazyari
  */
 object NormalizedUrlDao {

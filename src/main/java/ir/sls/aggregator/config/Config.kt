@@ -2,10 +2,11 @@ package ir.sls.aggregator.config
 
 /**
  * @author Mohammad Hossein Liaghat Email: mohamadliaghat@gmail.com
+ * Read config data from hocon file ==> -Dconfig.file=src/main/resources/aggregator_config.hocon
  * The data class in order to figure out the kafka
  */
 
-data class Config(val DataBase: DataBase, val Kafka: Kafka)
+data class Config(val dataBase: DataBase, val kafka: Kafka, val spark: Spark)
 
 data class DataBase(
         val jdbcUrl: String,
@@ -26,8 +27,10 @@ data class Kafka(
         val valueDeserializer: String,
         val autoOffsetReset: String,
         val maxPollRecords: Int,
-        val subscribtion: String,
+        val subscription: String,
         val maxPollIntervalMs: Int,
         val readFromBeginning: Boolean,
         val fetchMessageMaxBytes: Int
 )
+
+data class Spark(val port: Int)

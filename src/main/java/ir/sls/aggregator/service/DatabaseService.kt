@@ -1,5 +1,6 @@
 package ir.sls.aggregator.service
 
+import ir.sls.aggregator.config.ReadConfig
 import ir.sls.aggregator.dao.NormalizedUrlDao
 import ir.sls.aggregator.dao.OriginalUrlDao
 import ir.sls.aggregator.metric.InitMeter
@@ -10,7 +11,7 @@ import java.sql.SQLException
 
 /**
  * persisting a hashmap of dataRecords into database
- * @param  hashmap of dataRecords
+ * @param  HashMap of dataRecords
  *@exception <SQLException>.
  * @author Reza Varmazyari
  */
@@ -20,10 +21,10 @@ object DatabaseService {
 private val logger = KotlinLogging.logger{}
 
 
-    var jdbcUrl = ReadConfig.config.DataBase.jdbcUrl
-    var username = ReadConfig.config.DataBase.username
-    var password = ReadConfig.config.DataBase.password
-    var driver = ReadConfig.config.DataBase.driver
+    var jdbcUrl = ReadConfig.config.dataBase.jdbcUrl
+    var username = ReadConfig.config.dataBase.username
+    var password = ReadConfig.config.dataBase.password
+    var driver = ReadConfig.config.dataBase.driver
 
     init {
         DBConnection.setProperties(driver, jdbcUrl, username, password)
@@ -46,10 +47,10 @@ private val logger = KotlinLogging.logger{}
         // Amin: Use .use for resource management
         var con = DBConnection.getConnection()
         while (con == null){
-            var timeOut:Long = ReadConfig.config.DataBase.databaseConnectionTimeout
+            var timeOut:Long = ReadConfig.config.dataBase.databaseConnectionTimeout
             con = DBConnection.getConnection()
             timeOut *= 2
-            if (timeOut == ReadConfig.config.DataBase.databaseConnectionMaxTimeout)
+            if (timeOut == ReadConfig.config.dataBase.databaseConnectionMaxTimeout)
                 timeOut = 1000
             Thread.sleep(timeOut)
         }

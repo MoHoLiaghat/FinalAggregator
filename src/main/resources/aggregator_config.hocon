@@ -1,4 +1,4 @@
-DataBase{
+dataBase{
 
 
       	  jdbcUrl = "jdbc:mysql://localhost:3306/aggregator"
@@ -11,7 +11,7 @@ DataBase{
     }
 
 
-Kafka{
+kafka{
      	   bootstrapServers = ["192.168.1.53:9092"]
       	   groupId = Group_id_44
      	   enableAutoCommit = false
@@ -20,10 +20,13 @@ keyDeserializer = org.apache.kafka.common.serialization.StringDeserializer
            valueDeserializer = org.apache.kafka.common.serialization.StringDeserializer
       	   autoOffsetReset = earliest
      	   maxPollRecords = 10000
-     	   subscribtion = rahkar_test
+     	   subscription = rahkar_test
      	   maxPollIntervalMs = 2147483647
      	   readFromBeginning = true
      	   fetchMessageMaxBytes = 1048576
     
 }
 
+spark{
+    port = 4641
+}

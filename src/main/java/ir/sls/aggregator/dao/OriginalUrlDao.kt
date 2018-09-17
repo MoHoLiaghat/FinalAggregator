@@ -6,8 +6,8 @@ import java.sql.Connection
 import java.sql.PreparedStatement
 
 /**
- * data access object of original urls. creates a batch of originalUrls and then when the batch reaches
- * to a specified value , persists the batch to database
+ * data access object of original urls. creates a batch of originalUrls and
+ * then when the batch reaches to a specified value , persists the batch to database
  * @author Reza Varmazyari
  *
  */

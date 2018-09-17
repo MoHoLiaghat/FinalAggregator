@@ -2,6 +2,9 @@ package ir.sls.aggregator.metric
 
 import com.codahale.metrics.MetricRegistry
 
+/**
+ * @author Aryan Gholamlou
+ */
 object InitMeter {
     val metrics = MetricRegistry()
     var kafkaMeter = metrics.meter("kafka-meter")

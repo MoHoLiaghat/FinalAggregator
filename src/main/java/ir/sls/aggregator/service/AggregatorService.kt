@@ -11,7 +11,6 @@ import java.util.ArrayList
  */
 object AggregatorService {
 
-
     fun aggregate(dataRecords: ArrayList<DataRecord>): HashMap<String, DataRecord> {
         var heap = hashMapOf<String, DataRecord>()
         dataRecords.forEach {
