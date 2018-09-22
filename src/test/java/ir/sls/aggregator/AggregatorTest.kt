@@ -2,14 +2,13 @@ package ir.sls.aggregator
 
 import ir.sls.aggregator.model.DataRecord
 import ir.sls.aggregator.service.AggregatorService
-import ir.sls.aggregator.service.ConsumerService
+import ir.sls.aggregator.service.ConsumerServiceImp
 import ir.sls.aggregator.service.DatabaseService
 import org.assertj.core.api.Assertions
 import org.junit.After
 import org.junit.Before
 import org.junit.Test
 import java.sql.DriverManager
-import kotlin.test.assertEquals
 
 
 class AggregatorTest: DatabaseTest("/CreateTables.sql") {
@@ -45,7 +44,7 @@ class AggregatorTest: DatabaseTest("/CreateTables.sql") {
     @Test
     fun testDatabase(){
         DatabaseService.setProperties(jdbcUrl,username,password,driver)
-        ConsumerService().aggregateAndPersist(getDataForAggregation())
+        ConsumerServiceImp().aggregateAndPersist(getDataForAggregation())
 
         val con = DriverManager.getConnection(jdbcUrl,username,password)
         val preparedStatement = con.createStatement()

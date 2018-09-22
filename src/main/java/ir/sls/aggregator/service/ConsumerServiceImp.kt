@@ -1,11 +1,13 @@
 package ir.sls.aggregator.service
 
-import com.google.gson.Gson
+import ir.sls.aggregator.config.Config
 import ir.sls.aggregator.config.KafkaFactory
 import ir.sls.aggregator.config.ReadConfig
 import ir.sls.aggregator.metric.InitMeter
 import ir.sls.aggregator.model.DataRecord
+import ir.sls.aggregator.util.GsonReader
 import kafka.common.KafkaException
+import mu.KLogger
 import mu.KotlinLogging
 import org.apache.kafka.clients.consumer.ConsumerRecords
 import java.time.Duration
@@ -19,8 +21,8 @@ import kotlin.collections.ArrayList
  * @author Aryan Gholamlou , Reza Varmazyari , Email : Aryan.gholamlou@gmail.com ,  the.alxan@gmail.com
  */
 
-class ConsumerService {
-    private val logger = KotlinLogging.logger {}
+class ConsumerServiceImp{
+    private val logger:KLogger = KotlinLogging.logger {}
 
     fun aggregateAndPersist(recordsArray:ArrayList<DataRecord>):Boolean{
         logger.info("Got ${DataStore.recordsArray.size} records")
@@ -35,7 +37,7 @@ class ConsumerService {
 
     fun start() {
         metricService()
-        val gson = Gson().newBuilder().disableHtmlEscaping().create()
+
         var saveSuccess = true
         val consumer = KafkaFactory.createKafkaConsumer() ?: throw IllegalStateException()
         consumer?.subscribe(arrayListOf(ReadConfig.config.kafka.subscription))
@@ -53,10 +55,9 @@ class ConsumerService {
                 }
             }
             for (record in records) {
-                val dataRecord: DataRecord = gson.fromJson(record.value(), DataRecord::class.java)
+                val dataRecord: DataRecord = GsonReader().fromJson(record.value(), DataRecord::class.java)
                 DataStore.recordsArray.add(dataRecord)
                 if (DataStore.recordsArray.size == 1)
-
                     logger.info("Partition :: ${record.partition()} , Offset :: ${record.offset()}")
             }
 
