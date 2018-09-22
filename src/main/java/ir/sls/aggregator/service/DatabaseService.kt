@@ -72,15 +72,10 @@ private val logger = KotlinLogging.logger{}
             con?.close()
         }
         return if(allSaveSuccess){
-            DataStore.recordsArray.clear()
             true
         }
         else
             false
     }
 
-}
-
-object DataStore {
-    var recordsArray = arrayListOf<DataRecord>()
 }
