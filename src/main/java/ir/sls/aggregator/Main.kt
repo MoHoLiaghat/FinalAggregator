@@ -1,3 +1,5 @@
+import ir.sls.aggregator.config.ReadConfig
+import ir.sls.aggregator.model.DataRecord
 import ir.sls.aggregator.service.ConsumerServiceImp
 
 /**

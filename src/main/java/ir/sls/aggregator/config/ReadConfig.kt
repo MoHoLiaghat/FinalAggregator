@@ -12,7 +12,7 @@ object ReadConfig
     //parse to gson
     var gson = Gson().newBuilder().create()
     val tmp: String = hoconConfig.root().render(ConfigRenderOptions.concise())
-
     //create Config object
     val config = gson.fromJson(tmp, Config::class.java)
+
 }

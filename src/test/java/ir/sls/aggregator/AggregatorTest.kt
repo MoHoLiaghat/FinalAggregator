@@ -3,6 +3,7 @@ package ir.sls.aggregator
 import ir.sls.aggregator.model.DataRecord
 import ir.sls.aggregator.service.AggregatorService
 import ir.sls.aggregator.service.ConsumerService
+import ir.sls.aggregator.service.ConsumerServiceImp
 import ir.sls.aggregator.service.DatabaseService
 import org.assertj.core.api.Assertions
 import org.junit.After
@@ -44,7 +45,7 @@ class AggregatorTest: DatabaseTest("/CreateTables.sql") {
     @Test
     fun testDatabase(){
         DatabaseService.setProperties(jdbcUrl,username,password,driver)
-        ConsumerService().aggregateAndPersist(getDataForAggregation())
+        ConsumerServiceImp().processData(getDataForAggregation())
 
         val con = DriverManager.getConnection(jdbcUrl,username,password)
         val preparedStatement = con.createStatement()
