@@ -46,7 +46,6 @@ abstract class ConsumerService<T>{
             }
             records.map { record ->
                 val dataRecord: T = gson.fromJson<T>(record.value(),dataType)
-                println(dataRecord.toString())
                 recordsArray.add(dataRecord)
                 if (recordsArray.size == 1)
                     logger.info("Partition :: ${record.partition()} , Offset :: ${record.offset()}")
@@ -54,7 +53,7 @@ abstract class ConsumerService<T>{
             if (recordsArray.size > 0) {
                 saveSuccess = processData(recordsArray)
                 if (saveSuccess) {
-                    records.removeAll{true}
+                    records =  ConsumerRecords.empty()
                     consumer?.commitSync()
                 }
             }
