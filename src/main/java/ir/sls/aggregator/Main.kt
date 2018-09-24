@@ -1,4 +1,4 @@
-import ir.sls.aggregator.service.ConsumerService
+import ir.sls.aggregator.service.UrlConsumer
 
 /**
  * KDocs Syntax by Aryan Gholamlou
@@ -9,5 +9,5 @@ import ir.sls.aggregator.service.ConsumerService
 
 fun main(args: Array<String>)
 {
-    ConsumerService().start()
+    UrlConsumer().start()
 }

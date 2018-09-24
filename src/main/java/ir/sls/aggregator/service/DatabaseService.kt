@@ -44,7 +44,6 @@ private val logger = KotlinLogging.logger{}
 
         var allSaveSuccess = false
 
-        // Amin: Use .use for resource management
         var con = DBConnection.getConnection()
         while (con == null){
             var timeOut:Long = ReadConfig.config.dataBase.databaseConnectionTimeout
@@ -72,15 +71,10 @@ private val logger = KotlinLogging.logger{}
             con?.close()
         }
         return if(allSaveSuccess){
-            DataStore.recordsArray.clear()
             true
         }
         else
             false
     }
 
-}
-
-object DataStore {
-    var recordsArray = arrayListOf<DataRecord>()
 }
