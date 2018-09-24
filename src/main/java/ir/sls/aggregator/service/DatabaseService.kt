@@ -44,7 +44,6 @@ private val logger = KotlinLogging.logger{}
 
         var allSaveSuccess = false
 
-        // Amin: Use .use for resource management
         var con = DBConnection.getConnection()
         while (con == null){
             var timeOut:Long = ReadConfig.config.dataBase.databaseConnectionTimeout

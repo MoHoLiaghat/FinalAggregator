@@ -1,6 +1,4 @@
-import ir.sls.aggregator.config.ReadConfig
-import ir.sls.aggregator.model.DataRecord
-import ir.sls.aggregator.service.ConsumerServiceImp
+import ir.sls.aggregator.service.UrlConsumer
 
 /**
  * KDocs Syntax by Aryan Gholamlou
@@ -11,5 +9,5 @@ import ir.sls.aggregator.service.ConsumerServiceImp
 
 fun main(args: Array<String>)
 {
-    ConsumerServiceImp().start()
+    UrlConsumer().start()
 }

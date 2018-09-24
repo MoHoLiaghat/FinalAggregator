@@ -1,8 +1,8 @@
 package ir.sls.aggregator.service
 
-import com.google.gson.Gson
 import ir.sls.aggregator.config.ReadConfig
 import ir.sls.aggregator.metric.InitMeter.getPerMinuteKafka
+import ir.sls.aggregator.util.gson
 import spark.Spark.port
 import spark.kotlin.get
 
@@ -15,8 +15,6 @@ import spark.kotlin.get
 fun metricService()
 {
     port(ReadConfig.config.spark.port)
-
-    var gson = Gson().newBuilder().create()
 
     get("/metric") {
 
